@@ -9,14 +9,14 @@ using System.Xml;
 
 namespace Repository
 {
-    public class FilePresidentRepository
+    public class FilePresidentRepository: IPresidentRepository
     {
        
             private readonly string _filePath;
 
-            public FilePresidentRepository(string filePath)
+            public FilePresidentRepository()
             {
-                _filePath = filePath;
+                _filePath = "aaaa";
             }
 
             public async Task<IEnumerable<President>> GetPresidentsAsync()

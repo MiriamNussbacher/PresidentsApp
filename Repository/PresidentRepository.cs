@@ -7,13 +7,14 @@ using System.Threading.Tasks;
 
 namespace Repository
 {
-    public class PresidentRepository{ 
-    private readonly List<President> _presidents;
-
-    public PresidentRepository()
+    public class PresidentRepository : IPresidentRepository
     {
-        // Initialize with sample data
-        _presidents = new List<President>
+        private readonly List<President> _presidents;
+
+        public PresidentRepository()
+        {
+            // Initialize with sample data
+            _presidents = new List<President>
         {
             new President
     {
@@ -112,48 +113,49 @@ namespace Repository
         TermCount = 1
     }
         };
-    }
-
-    public Task<IEnumerable<President>> GetPresidentsAsync()
-    {
-        return Task.FromResult(_presidents.AsEnumerable());
-    }
-
-    public Task<President> GetPresidentByIdAsync(int id)
-    {
-        var president = _presidents.FirstOrDefault(p => p.Id == id);
-        return Task.FromResult(president);
-    }
-
-    public Task AddPresidentAsync(President president)
-    {
-        president.Id = _presidents.Max(p => p.Id) + 1;
-        _presidents.Add(president);
-        return Task.CompletedTask;
-    }
-
-    public Task UpdatePresidentAsync(President president)
-    {
-        var existingPresident = _presidents.FirstOrDefault(p => p.Id == president.Id);
-        if (existingPresident != null)
-        {
-            existingPresident.Name = president.Name;
-            existingPresident.Birthdate = president.Birthdate;
-            existingPresident.InaugurationDate = president.InaugurationDate;
-            // Update other properties as needed
         }
-        return Task.CompletedTask;
-    }
 
-    public Task DeletePresidentAsync(int id)
-    {
-        var president = _presidents.FirstOrDefault(p => p.Id == id);
-        if (president != null)
+        public Task<IEnumerable<President>> GetPresidentsAsync()
         {
-            _presidents.Remove(president);
+         
+            return Task.FromResult(_presidents.AsEnumerable());
         }
-        return Task.CompletedTask;
+
+        public Task<President> GetPresidentByIdAsync(int id)
+        {
+            var president = _presidents.FirstOrDefault(p => p.Id == id);
+            return Task.FromResult(president);
+        }
+
+        public Task AddPresidentAsync(President president)
+        {
+            president.Id = _presidents.Max(p => p.Id) + 1;
+            _presidents.Add(president);
+            return Task.CompletedTask;
+        }
+
+        public Task UpdatePresidentAsync(President president)
+        {
+            var existingPresident = _presidents.FirstOrDefault(p => p.Id == president.Id);
+            if (existingPresident != null)
+            {
+                existingPresident.Name = president.Name;
+                existingPresident.Birthdate = president.Birthdate;
+                existingPresident.InaugurationDate = president.InaugurationDate;
+                // Update other properties as needed
+            }
+            return Task.CompletedTask;
+        }
+
+        public Task DeletePresidentAsync(int id)
+        {
+            var president = _presidents.FirstOrDefault(p => p.Id == id);
+            if (president != null)
+            {
+                _presidents.Remove(president);
+            }
+            return Task.CompletedTask;
+        }
     }
-}
 
 }
