@@ -9,7 +9,8 @@ using System.Threading.Tasks;
 
 namespace Repository
 {
-    public class SqlPresidentRepository { 
+    public class SqlPresidentRepository: IPresidentRepository
+    { 
         private readonly SqlConnection _connection;
 
         public SqlPresidentRepository(string connectionString)

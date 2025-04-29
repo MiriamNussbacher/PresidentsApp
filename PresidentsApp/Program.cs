@@ -1,8 +1,14 @@
+using Repository;
+using Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services.AddControllers();
+builder.Services.AddTransient<IPresidentService, PresidentService>();
+builder.Services.AddTransient<IPresidentRepository, FilePresidentRepository>();
+builder.Services.AddScoped<IIncriment, Incriment>();
 
 var app = builder.Build();
 

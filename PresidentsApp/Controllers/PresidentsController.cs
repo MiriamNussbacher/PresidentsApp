@@ -1,6 +1,7 @@
 ﻿using Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Repository;
 using Services;
 
 namespace PresidentsApp.Controllers
@@ -9,13 +10,19 @@ namespace PresidentsApp.Controllers
     [ApiController]
     public class PresidentsController : ControllerBase
     {
-     
-            private readonly PresidentService _presidentService= new PresidentService();
+        private readonly IPresidentService _presidentService;
+        private readonly IIncriment _incriment;
+        public PresidentsController(IPresidentService presidentService, IIncriment incriment)
+        {
 
+            _presidentService = presidentService;
+            _incriment = incriment;
+        }
 
-            [HttpGet]
+        [HttpGet]
             public async Task<IActionResult> GetPresidents()
             {
+                _incriment.addOne();
                 var presidents = await _presidentService.GetPresidentsAsync();
                 return Ok(presidents);
             }
